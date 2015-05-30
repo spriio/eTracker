@@ -44,17 +44,66 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('addExpenseCtrl', function($scope,$cordovaSQLite) {
+.controller('addExpenseCtrl', function($scope,$cordovaSQLite,$stateParams) {
+if ($stateParams.expensesId)
+{
+//alert("here : " + JSON.stringify($stateParams) );
+	var query = "select title,amount,category,rowid from myExpenses where rowid= ? ";
+		  $scope.expenses=[]; 
+//(title, amount,category
+		    $cordovaSQLite.execute(db, query,[$stateParams.expensesId]).then(function(res) {
+				if(res.rows.length > 0) {
+						$scope.expense = res.rows[0];
+				}   
+				console.log($scope.expense);
+			}, function (err) {
+				console.log(err);
+			});
+}
+
 	$scope.submitExpense=function(expense){
 		console.log(expense);
-		var query = "INSERT INTO myExpenses (title, amount,category) VALUES (?,?,?)";
-		$cordovaSQLite.execute(db, query, [expense.title,expense.amount,expense.category]).then(function(res) {
+		var query;
+		if (!$scope.expense.rowid )
+		{
+		console.log($scope.expense.rowid );
+		 query = "INSERT INTO myExpenses (title, amount,category) VALUES (?,?,?)";
+		 		$cordovaSQLite.execute(db, query, [expense.title,expense.amount,expense.category]).then(function(res) {
 		  console.log("insertId: " + res.insertId);
 		}, function (err) {
 		  console.error(err);
 		});
+		}
+		else{
+		 query = "update myExpenses set title = ? , amount = ? ,category = ?  where rowid = ?";
+		 		$cordovaSQLite.execute(db, query, [expense.title,expense.amount,expense.category,$scope.expense.rowid]).then(function(res) {
+		  console.log("update: " + JSON.stringify(res));
+		}, function (err) {
+		  console.error(err);
+		});
+		 }
+
 	};
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+.controller('listExpenseCtrl', function($scope,$cordovaSQLite,$stateParams) {
+
+
+
+		var query = "select title,amount,rowid from myExpenses";
+		  $scope.expenses=[]; 
+//(title, amount,category
+		    $cordovaSQLite.execute(db, query).then(function(res) {
+				if(res.rows.length > 0) {
+					for(var i=0; i<res.rows.length; i++){
+						$scope.expenses.push(res.rows[i]);
+					}
+					$scope.expensesCount = res.rows.length;
+				}   
+				//console.log($scope.expenses);
+			}, function (err) {
+				console.log(err);
+			});
+
+})
+

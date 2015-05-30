@@ -1,0 +1,9 @@
+<ion-view view-title="Expenses">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="expense in expenses" href="#/app/expense/{{expense.rowid}}">
+        {{expense.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
