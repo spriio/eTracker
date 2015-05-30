@@ -1,0 +1,27 @@
+<ion-view view-title="Add Expense">
+  <ion-content>
+  <form   name="expenses"  ng-submit="submitExpense(expense)">
+		<div class="list list-inset">
+	  <label class="item item-input">
+		<input type="text" ng-model="expense.title" placeholder="Title">
+	  </label>
+	  <label class="item item-input">
+		<input type="number"	ng-model="expense.amount"  placeholder="Amount">
+	  </label>
+		<label class="item item-input item-select">
+		<div class="input-label">
+		  Category
+		</div>
+		<select	ng-model="expense.category">
+		  <option>Entertainment</option>
+		  <option selected>Food</option>
+		  <option>Electronics</option>
+		</select>
+	  </label>
+	   <button type="submit" class="button button-full button-positive">
+		  Submit
+		</button>
+	</div>
+</form>
+  </ion-content>
+</ion-view>
