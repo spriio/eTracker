@@ -1,0 +1,68 @@
+<ion-view view-title="Charts">
+    <ion-nav-back-button>
+      </ion-nav-back-button>
+        <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+    </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+ <a><button class="button button-icon ion-loop" ng-click="datarefresh()" ></button></a>
+<a><button class="button button-icon ion-android-more-horizontal" ng-click="popover.show($event)" ></button></a>
+      </ion-nav-buttons>
+
+
+  <ion-content>
+
+     <div> <highchart config="chartConfig" ></highchart></div>
+
+  </ion-content>
+
+
+
+
+
+ <script id="templates/popover.html" type="text/ng-template"> 
+      <ion-popover-view class="fit ">
+       
+        <a class="item" style="background:rgba(0,0,0,0.0)" ng-click="showreport_0()">
+              Expenses - Pie Chart
+            </a>
+
+            <a class="item" style="background:rgba(0,0,0,0.0)" ng-click="showreport1()">
+             Requests Closure
+            </a>
+             <a class="item" style="background:rgba(0,0,0,0.0)" ng-click="showreport2()">
+              Employee Revenue/Mth 
+            </a>
+           
+           <a class="item" style="background:rgba(0,0,0,0.0)" ng-click="showreport3()">
+              Monthly Revenue/Service
+            </a>
+
+            <a class="item" style="background:rgba(0,0,0,0.0)" ng-click="showreport6()">
+              Overall Revenue/Service
+            </a>
+        
+      </ion-popover-view>
+    </script>
+
+
+
+</ion-view>
+
+<ion-tabs class="tabs-positive tabs-calm tabs-icon-top">
+
+ <ion-tab title="Charts" href="/app/charts" icon-on="ion-ios-pulse-strong" icon-off="ion-ios-pulse-strong-outline">
+    <!-- Tab 3 content -->
+    Trends
+  </ion-tab>
+
+   <ion-tab title="Home" href="/app/addExpense" icon-on="ion-ios-home" icon-off="ion-ios-home-outline">
+    <!-- Tab 3 content -->
+    Home
+  </ion-tab>
+
+ 
+
+
+</ion-tabs>
