@@ -64,12 +64,12 @@ if (window.cordova) {
       }
     }
   })
-    .state('app.playlists', {
-      url: "/playlists",
+    .state('app.expenses', {
+      url: "/expenses",
       views: {
         'menuContent': {
-          templateUrl: "templates/playlists.html",
-          controller: 'PlaylistsCtrl'
+          templateUrl: "templates/expenses.html",
+          controller: 'listExpenseCtrl'
         }
       }
     }) 
@@ -93,14 +93,14 @@ if (window.cordova) {
     })
 
   .state('app.single', {
-    url: "/playlists/:playlistId",
+    url: "/expense/:expensesId",
     views: {
       'menuContent': {
-        templateUrl: "templates/playlist.html",
-        controller: 'PlaylistCtrl'
+        templateUrl: "templates/addExpense.html",
+        controller: 'addExpenseCtrl'
       }
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/error');
 });
