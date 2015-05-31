@@ -1,11 +1,11 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,$location) {
   // Form data for the login modal
   $scope.loginData = {};
 
   // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
+  $ionicModal.fromTemplateUrl('templates/addExpense.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
@@ -18,7 +18,12 @@ angular.module('starter.controllers', [])
 
   // Open the login modal
   $scope.login = function() {
+  
     $scope.modal.show();
+  };
+// Open the login modal
+  $scope.addExpenseFunc = function() {
+	$location.path('#/app/addExpense');
   };
 
   // Perform the login action when the user submits the login form
@@ -44,7 +49,7 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('addExpenseCtrl', function($scope,$cordovaSQLite,$stateParams) {
+.controller('addExpenseCtrl', function($scope,$cordovaSQLite,$stateParams,$location) {
 if ($stateParams.expensesId)
 {
 //alert("here : " + JSON.stringify($stateParams) );
@@ -64,12 +69,14 @@ if ($stateParams.expensesId)
 	$scope.submitExpense=function(expense){
 		console.log(expense);
 		var query;
-		if (!$scope.expense.rowid )
+		if (typeof $scope.expense === 'undefined' )
 		{
-		console.log($scope.expense.rowid );
+		console.log($scope.expense );
 		 query = "INSERT INTO myExpenses (title, amount,category) VALUES (?,?,?)";
 		 		$cordovaSQLite.execute(db, query, [expense.title,expense.amount,expense.category]).then(function(res) {
 		  console.log("insertId: " + res.insertId);
+		  $location.path('#/app/expenses');
+		  
 		}, function (err) {
 		  console.error(err);
 		});
@@ -78,6 +85,8 @@ if ($stateParams.expensesId)
 		 query = "update myExpenses set title = ? , amount = ? ,category = ?  where rowid = ?";
 		 		$cordovaSQLite.execute(db, query, [expense.title,expense.amount,expense.category,$scope.expense.rowid]).then(function(res) {
 		  console.log("update: " + JSON.stringify(res));
+		  $location.path('#/app/expenses');
+		  
 		}, function (err) {
 		  console.error(err);
 		});
@@ -87,9 +96,6 @@ if ($stateParams.expensesId)
 })
 
 .controller('listExpenseCtrl', function($scope,$cordovaSQLite,$stateParams) {
-
-
-
 		var query = "select title,amount,rowid from myExpenses";
 		  $scope.expenses=[]; 
 //(title, amount,category
